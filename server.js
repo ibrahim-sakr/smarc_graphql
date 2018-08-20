@@ -12,6 +12,6 @@ app.use('/graphql', express_graphql({
     graphiql: true
 }));
 
-app.listen(4000, () => console.log('Express GraphQL Server Now Running On localhost:4000/graphql'));
+app.listen(4000, () => console.log('Express GraphQL Server Now Running On http://127.0.0.1:4000/graphql'));
 
 // Mutation: insert and edit resource
