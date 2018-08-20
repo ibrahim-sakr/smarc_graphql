@@ -1,4 +1,4 @@
-#Smarc GraphQL
+# Smarc GraphQL
 
 hello folks, this is a simple self study for graphQL.
 
@@ -8,7 +8,7 @@ we used to use a REST APIs, so why don't try something new ??
 
 here I'm trying to implement all endpoints for the smarc with graphQL.
 
-###Target
+### Target
 
 - implement a graphQL server with express, with the ability to use it with existing REST APIs
 - architects the server to be handy for expanding
@@ -18,8 +18,8 @@ here I'm trying to implement all endpoints for the smarc with graphQL.
     - N+1 problem
     - duplicated code
     - update and delete operations
-   
-##Install
+
+## Install
 
 ```
 git clone git@github.com:ibrahimsaqr/smarc_graphql.git
@@ -27,7 +27,7 @@ cd smarc_graphql
 npm install
 ```
 
-##Run
+## Run
 
 ```
 node server.js
