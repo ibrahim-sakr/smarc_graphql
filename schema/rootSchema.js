@@ -37,12 +37,12 @@ const mutationType = new graphql.GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
         light: LightSchema.mutation(),
-        // device: DeviceSchema.create(),
-        // motor: MotorSchema.create(),
-        // log: LogSchema.create(),
-        // room: RoomSchema.create(),
-        // node: NodeSchema.create(),
-        // user: UserSchema.create(),
+        device: DeviceSchema.mutation(),
+        motor: MotorSchema.mutation(),
+        log: LogSchema.mutation(),
+        room: RoomSchema.mutation(),
+        node: NodeSchema.mutation(),
+        user: UserSchema.mutation(),
     }
 });
 

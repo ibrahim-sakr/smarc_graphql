@@ -1,8 +1,8 @@
 const graphql = require('graphql');
 
 module.exports = new graphql.GraphQLInputObjectType({
-    name: 'PointInput',
-    description: 'input represents a single light point',
+    name: 'MotorInput',
+    description: 'input represents a single motor point',
     fields: {
         id: { type: graphql.GraphQLInt },
         name: { type: graphql.GraphQLString },

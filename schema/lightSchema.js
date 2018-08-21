@@ -1,6 +1,5 @@
 const graphql = require('graphql');
 const LightType = require('../types/lightType');
-const LightDB = require('../db/lights');
 const PointInput = require('../inputs/pointInput');
 const ObjectID = require('mongodb').ObjectID;
 
@@ -11,10 +10,8 @@ class LightSchema {
             args: {
                 _id: { type: graphql.GraphQLID }
             },
-            resolve(parentValue, args) {
-                return LightDB.filter((point) => {
-                    return point._id === args._id;
-                })[0];
+            async resolve(parentValue, args, context) {
+                return await context.db.collection('light').findOne({ _id: ObjectID(args._id) });
             }
         };
     }
@@ -22,8 +19,8 @@ class LightSchema {
     static all() {
         return {
             type: graphql.GraphQLList(LightType),
-            resolve() {
-                return LightDB;
+            async resolve(parentValue, args, context) {
+                return await context.db.collection('light').find({}).toArray();
             }
         };
     }
@@ -39,14 +36,14 @@ class LightSchema {
             async resolve(parentValue, args, context) {
                 // delete exist document
                 if (args._id && args.delete) {
-                    const deletedDocuments = await context.db.collection('test_collection').findOneAndDelete({ _id: ObjectID(args._id) });
+                    const deletedDocuments = await context.db.collection('light').findOneAndDelete({ _id: ObjectID(args._id) });
 
                     return deletedDocuments.value;
                 }
 
                 // update exists document
                 if (args._id && args.point && !args.delete) {
-                    const updatedDocuments = await context.db.collection('test_collection').findOneAndUpdate({ _id: ObjectID(args._id) }, {
+                    const updatedDocuments = await context.db.collection('light').findOneAndUpdate({ _id: ObjectID(args._id) }, {
                         $set: args.point
                     });
 
@@ -55,12 +52,13 @@ class LightSchema {
 
                 // create new document
                 if (!args._id && args.point && !args.delete) {
-                    const insertedDocuments = await context.db.collection('test_collection').insertOne([args.point]);
+                    const insertedDocuments = await context.db.collection('light').insertOne(args.point);
 
                     return insertedDocuments.ops[0];
                 }
 
                 // return error
+                return new Error('you must provide a correct params');
             }
         };
     }
