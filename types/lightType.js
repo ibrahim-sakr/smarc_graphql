@@ -15,13 +15,13 @@ module.exports = new graphql.GraphQLObjectType({
         room: {
             type: RoomType,
             async resolve(parentValue, args, context) {
-                return context.rooms.load(parentValue.room_id)
+                return context.loader.rooms.load(parentValue.room_id)
             }
         },
         node: {
             type: NodeType,
             async resolve(parentValue, args, context) {
-                return context.nodes.load(parentValue.node_id)
+                return context.loader.nodes.load(parentValue.node_id)
             }
         },
     }
