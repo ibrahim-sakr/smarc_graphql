@@ -1,11 +1,11 @@
 const graphql = require('graphql');
-const LightSchema = require('../schema/lightSchema');
-const DeviceSchema = require('../schema/deviceSchema');
-const MotorSchema = require('../schema/motorSchema');
-const LogSchema = require('../schema/logSchema');
-const RoomSchema = require('../schema/roomSchema');
-const NodeSchema = require('../schema/nodeSchema');
-const UserSchema = require('../schema/userSchema');
+const LightSchema = require('schema/lightSchema');
+const DeviceSchema = require('schema/deviceSchema');
+const MotorSchema = require('schema/motorSchema');
+const LogSchema = require('schema/logSchema');
+const RoomSchema = require('schema/roomSchema');
+const NodeSchema = require('schema/nodeSchema');
+const UserSchema = require('schema/userSchema');
 
 const queryType = new graphql.GraphQLObjectType({
     name: 'RootQueryType',

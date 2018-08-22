@@ -1,17 +1,18 @@
 const graphql = require('graphql');
-const DeviceType = require('../types/deviceType');
-const DeviceInput = require('../inputs/deviceInput');
-const ObjectID = require('mongodb').ObjectID;
+const DeviceType = require('types/deviceType');
+const DeviceInput = require('inputs/deviceInput');
+const mongo = require('db/mongo');
+const MongoId = require('scalars/mongoIdScalar');
 
 class DeviceSchema {
     static find() {
         return {
             type: DeviceType,
             args: {
-                _id: { type: graphql.GraphQLID }
+                _id: { type: MongoId }
             },
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('device').findOne({ _id: ObjectID(args._id) });
+            async resolve(parentValue, args) {
+                return await mongo.db().collection('device').findOne({ _id: mongo.id.new(args._id) });
             }
         };
     }
@@ -19,8 +20,8 @@ class DeviceSchema {
     static all() {
         return {
             type: graphql.GraphQLList(DeviceType),
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('device').find().toArray();
+            async resolve() {
+                return await mongo.db().collection('device').find().toArray();
             }
         };
     }
@@ -29,21 +30,21 @@ class DeviceSchema {
         return {
             type: DeviceType,
             args: {
-                _id: { type: graphql.GraphQLID },
+                _id: { type: MongoId },
                 device: { type: DeviceInput },
                 delete: { type: graphql.GraphQLBoolean }
             },
-            async resolve(parentValue, args, context) {
+            async resolve(parentValue, args) {
                 // delete exist document
                 if (args._id && args.delete) {
-                    const deletedDocuments = await context.db.collection('device').findOneAndDelete({ _id: ObjectID(args._id) });
+                    const deletedDocuments = await mongo.db().collection('device').findOneAndDelete({ _id: mongo.id.new(args._id) });
 
                     return deletedDocuments.value;
                 }
 
                 // update exists document
                 if (args._id && args.device && !args.delete) {
-                    const updatedDocuments = await context.db.collection('device').findOneAndUpdate({ _id: ObjectID(args._id) }, {
+                    const updatedDocuments = await mongo.db().collection('device').findOneAndUpdate({ _id: mongo.id.new(args._id) }, {
                         $set: args.device
                     });
 
@@ -52,7 +53,7 @@ class DeviceSchema {
 
                 // create new document
                 if (!args._id && args.device && !args.delete) {
-                    const insertedDocuments = await context.db.collection('device').insertOne(args.device);
+                    const insertedDocuments = await mongo.db().collection('device').insertOne(args.device);
 
                     return insertedDocuments.ops[0];
                 }

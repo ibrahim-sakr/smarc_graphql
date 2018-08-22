@@ -6,6 +6,6 @@ module.exports = new graphql.GraphQLInputObjectType({
     fields: {
         username: { type: graphql.GraphQLInt },
         password: { type: graphql.GraphQLString },
-        roles: { type: graphql.GraphQLID }
+        roles: { type: graphql.GraphQLList(graphql.GraphQLString) }
     }
 });

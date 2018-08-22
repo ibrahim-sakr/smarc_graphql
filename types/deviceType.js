@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const DetailsType = require('./detailsType');
+const DetailsType = require('types/detailsType');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'Device',

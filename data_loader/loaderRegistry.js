@@ -1,26 +1,20 @@
-const Loader = require('./Loader');
-const RoomDB = require('../db/rooms');
-const NodeDB = require('../db/nodes');
+const ObjectID = require('mongodb').ObjectID;
+const Loader = require('data_loader/Loader');
+const mongo = require('db/mongo');
 
 // custom Loader
 // solve N+1 problem
 module.exports = {
-    rooms: Loader((ids) => {
-        return new Promise((resolve) => {
-            const rooms = RoomDB.filter((room) => {
-                return ids.indexOf(room._id) !== -1;
-            });
-
-            return resolve(rooms);
+    rooms: Loader(async (ids) => {
+        const mongoIds = ids.map((id) => {
+            return ObjectID(id);
         });
+        return await mongo.db().collection('room').find({ _id: { $in: mongoIds } }).toArray();
     }),
-    nodes: Loader((ids) => {
-        return new Promise((resolve) => {
-            const nodes = NodeDB.filter((node) => {
-                return ids.indexOf(node._id) !== -1;
-            });
-
-            return resolve(nodes);
+    nodes: Loader(async (ids) => {
+        const mongoIds = ids.map((id) => {
+            return ObjectID(id);
         });
+        return await mongo.db().collection('node').find({ _id: { $in: mongoIds } }).toArray();
     })
 };

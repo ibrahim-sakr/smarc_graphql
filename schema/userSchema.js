@@ -1,17 +1,18 @@
 const graphql = require('graphql');
-const UserType = require('../types/userType');
-const UserInput = require('../inputs/userInput');
-const ObjectID = require('mongodb').ObjectID;
+const UserType = require('types/userType');
+const UserInput = require('inputs/userInput');
+const mongo = require('db/mongo');
+const MongoId = require('scalars/mongoIdScalar');
 
 class UserSchema {
     static find() {
         return {
             type: UserType,
             args: {
-                _id: { type: graphql.GraphQLID }
+                _id: { type: MongoId }
             },
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('user').findOne({ _id: ObjectID(args._id) });
+            async resolve(parentValue, args) {
+                return await mongo.db().collection('user').findOne({ _id: mongo.id.new(args._id) });
             }
         };
     }
@@ -19,8 +20,8 @@ class UserSchema {
     static all() {
         return {
             type: graphql.GraphQLList(UserType),
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('user').find().toArray();
+            async resolve() {
+                return await mongo.db().collection('user').find().toArray();
             }
         };
     }
@@ -29,21 +30,21 @@ class UserSchema {
         return {
             type: UserType,
             args: {
-                _id: { type: graphql.GraphQLID },
+                _id: { type: MongoId },
                 user: { type: UserInput },
                 delete: { type: graphql.GraphQLBoolean }
             },
-            async resolve(parentValue, args, context) {
+            async resolve(parentValue, args) {
                 // delete exist document
                 if (args._id && args.delete) {
-                    const deletedDocuments = await context.db.collection('user').findOneAndDelete({ _id: ObjectID(args._id) });
+                    const deletedDocuments = await mongo.db().collection('user').findOneAndDelete({ _id: mongo.id.new(args._id) });
 
                     return deletedDocuments.value;
                 }
 
                 // update exists document
                 if (args._id && args.user && !args.delete) {
-                    const updatedDocuments = await context.db.collection('user').findOneAndUpdate({ _id: ObjectID(args._id) }, {
+                    const updatedDocuments = await mongo.db().collection('user').findOneAndUpdate({ _id: mongo.id.new(args._id) }, {
                         $set: args.user
                     });
 
@@ -52,7 +53,7 @@ class UserSchema {
 
                 // create new document
                 if (!args._id && args.user && !args.delete) {
-                    const insertedDocuments = await context.db.collection('user').insertOne(args.user);
+                    const insertedDocuments = await mongo.db().collection('user').insertOne(args.user);
 
                     return insertedDocuments.ops[0];
                 }

@@ -1,17 +1,18 @@
 const graphql = require('graphql');
-const LogType = require('../types/logType');
-const LogInput = require('../inputs/logInput');
-const ObjectID = require('mongodb').ObjectID;
+const LogType = require('types/logType');
+const LogInput = require('inputs/logInput');
+const mongo = require('db/mongo');
+const MongoId = require('scalars/mongoIdScalar');
 
 class LogSchema {
     static find() {
         return {
             type: LogType,
             args: {
-                _id: { type: graphql.GraphQLID }
+                _id: { type: MongoId }
             },
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('log').findOne({ _id: ObjectID(args._id) });
+            async resolve(parentValue, args) {
+                return await mongo.db().collection('log').findOne({ _id: mongo.id.new(args._id) });
             }
         };
     }
@@ -19,8 +20,8 @@ class LogSchema {
     static all() {
         return {
             type: graphql.GraphQLList(LogType),
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('log').find().toArray();
+            async resolve() {
+                return await mongo.db().collection('log').find().toArray();
             }
         };
     }
@@ -29,21 +30,21 @@ class LogSchema {
         return {
             type: LogType,
             args: {
-                _id: { type: graphql.GraphQLID },
+                _id: { type: MongoId },
                 log: { type: LogInput },
                 delete: { type: graphql.GraphQLBoolean }
             },
-            async resolve(parentValue, args, context) {
+            async resolve(parentValue, args) {
                 // delete exist document
                 if (args._id && args.delete) {
-                    const deletedDocuments = await context.db.collection('log').findOneAndDelete({ _id: ObjectID(args._id) });
+                    const deletedDocuments = await mongo.db().collection('log').findOneAndDelete({ _id: mongo.id.new(args._id) });
 
                     return deletedDocuments.value;
                 }
 
                 // update exists document
                 if (args._id && args.log && !args.delete) {
-                    const updatedDocuments = await context.db.collection('log').findOneAndUpdate({ _id: ObjectID(args._id) }, {
+                    const updatedDocuments = await mongo.db().collection('log').findOneAndUpdate({ _id: mongo.id.new(args._id) }, {
                         $set: args.log
                     });
 
@@ -52,7 +53,7 @@ class LogSchema {
 
                 // create new document
                 if (!args._id && args.log && !args.delete) {
-                    const insertedDocuments = await context.db.collection('log').insertOne(args.log);
+                    const insertedDocuments = await mongo.db().collection('log').insertOne(args.log);
 
                     return insertedDocuments.ops[0];
                 }

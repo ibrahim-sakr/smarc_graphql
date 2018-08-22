@@ -1,4 +1,5 @@
 const graphql = require('graphql');
+const MongoId = require('scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLInputObjectType({
     name: 'MotorInput',
@@ -6,7 +7,7 @@ module.exports = new graphql.GraphQLInputObjectType({
     fields: {
         id: { type: graphql.GraphQLInt },
         name: { type: graphql.GraphQLString },
-        room_id: { type: graphql.GraphQLID },
-        node_id: { type: graphql.GraphQLID }
+        room_id: { type: MongoId },
+        node_id: { type: MongoId }
     }
 });

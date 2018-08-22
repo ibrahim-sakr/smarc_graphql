@@ -1,17 +1,18 @@
 const graphql = require('graphql');
-const NodeType = require('../types/nodeType');
-const NodeInput = require('../inputs/nodeInput');
-const ObjectID = require('mongodb').ObjectID;
+const NodeType = require('types/nodeType');
+const NodeInput = require('inputs/nodeInput');
+const mongo = require('db/mongo');
+const MongoId = require('scalars/mongoIdScalar');
 
 class NodeSchema {
     static find() {
         return {
             type: NodeType,
             args: {
-                _id: { type: graphql.GraphQLID }
+                _id: { type: MongoId }
             },
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('node').findOne({ _id: ObjectID(args._id) });
+            async resolve(parentValue, args) {
+                return await mongo.db().collection('node').findOne({ _id: mongo.id.new(args._id) });
             }
         };
     }
@@ -19,8 +20,8 @@ class NodeSchema {
     static all() {
         return {
             type: graphql.GraphQLList(NodeType),
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('node').find().toArray();
+            async resolve() {
+                return await mongo.db().collection('node').find().toArray();
             }
         };
     }
@@ -29,21 +30,21 @@ class NodeSchema {
         return {
             type: NodeType,
             args: {
-                _id: { type: graphql.GraphQLID },
+                _id: { type: MongoId },
                 node: { type: NodeInput },
                 delete: { type: graphql.GraphQLBoolean }
             },
-            async resolve(parentValue, args, context) {
+            async resolve(parentValue, args) {
                 // delete exist document
                 if (args._id && args.delete) {
-                    const deletedDocuments = await context.db.collection('node').findOneAndDelete({ _id: ObjectID(args._id) });
+                    const deletedDocuments = await mongo.db().collection('node').findOneAndDelete({ _id: mongo.id.new(args._id) });
 
                     return deletedDocuments.value;
                 }
 
                 // update exists document
                 if (args._id && args.node && !args.delete) {
-                    const updatedDocuments = await context.db.collection('node').findOneAndUpdate({ _id: ObjectID(args._id) }, {
+                    const updatedDocuments = await mongo.db().collection('node').findOneAndUpdate({ _id: mongo.id.new(args._id) }, {
                         $set: args.node
                     });
 
@@ -52,7 +53,7 @@ class NodeSchema {
 
                 // create new document
                 if (!args._id && args.node && !args.delete) {
-                    const insertedDocuments = await context.db.collection('node').insertOne(args.node);
+                    const insertedDocuments = await mongo.db().collection('node').insertOne(args.node);
 
                     return insertedDocuments.ops[0];
                 }

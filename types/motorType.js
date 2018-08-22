@@ -1,6 +1,6 @@
 const graphql = require('graphql');
-const RoomType = require('./roomType');
-const NodeType = require('./nodeType');
+const RoomType = require('types/roomType');
+const NodeType = require('types/nodeType');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'Motor',
@@ -14,13 +14,13 @@ module.exports = new graphql.GraphQLObjectType({
         room: {
             type: RoomType,
             async resolve(parentValue, args, context) {
-                return context.loader.rooms.load(parentValue.room_id)
+                return context.rooms.load(parentValue.room_id)
             }
         },
         node: {
             type: NodeType,
             async resolve(parentValue, args, context) {
-                return context.loader.nodes.load(parentValue.node_id)
+                return context.nodes.load(parentValue.node_id)
             }
         },
     }

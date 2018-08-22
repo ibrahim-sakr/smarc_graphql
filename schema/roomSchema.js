@@ -1,17 +1,18 @@
 const graphql = require('graphql');
-const RoomType = require('../types/roomType');
-const RoomInput = require('../inputs/roomInput');
-const ObjectID = require('mongodb').ObjectID;
+const RoomType = require('types/roomType');
+const RoomInput = require('inputs/roomInput');
+const mongo = require('db/mongo');
+const MongoId = require('scalars/mongoIdScalar');
 
 class RoomSchema {
     static find() {
         return {
             type: RoomType,
             args: {
-                _id: { type: graphql.GraphQLID }
+                _id: { type: MongoId }
             },
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('room').findOne({ _id: ObjectID(args._id) });
+            async resolve(parentValue, args) {
+                return await mongo.db().collection('room').findOne({ _id: mongo.id.new(args._id) });
             }
         };
     }
@@ -19,8 +20,8 @@ class RoomSchema {
     static all() {
         return {
             type: graphql.GraphQLList(RoomType),
-            async resolve(parentValue, args, context) {
-                return await context.db.collection('room').find().toArray();
+            async resolve() {
+                return await mongo.db().collection('room').find().toArray();
             }
         };
     }
@@ -29,21 +30,21 @@ class RoomSchema {
         return {
             type: RoomType,
             args: {
-                _id: { type: graphql.GraphQLID },
+                _id: { type: MongoId },
                 room: { type: RoomInput },
                 delete: { type: graphql.GraphQLBoolean }
             },
-            async resolve(parentValue, args, context) {
+            async resolve(parentValue, args) {
                 // delete exist document
                 if (args._id && args.delete) {
-                    const deletedDocuments = await context.db.collection('room').findOneAndDelete({ _id: ObjectID(args._id) });
+                    const deletedDocuments = await mongo.db().collection('room').findOneAndDelete({ _id: mongo.id.new(args._id) });
 
                     return deletedDocuments.value;
                 }
 
                 // update exists document
                 if (args._id && args.room && !args.delete) {
-                    const updatedDocuments = await context.db.collection('room').findOneAndUpdate({ _id: ObjectID(args._id) }, {
+                    const updatedDocuments = await mongo.db().collection('room').findOneAndUpdate({ _id: mongo.id.new(args._id) }, {
                         $set: args.room
                     });
 
@@ -52,7 +53,7 @@ class RoomSchema {
 
                 // create new document
                 if (!args._id && args.room && !args.delete) {
-                    const insertedDocuments = await context.db.collection('room').insertOne(args.room);
+                    const insertedDocuments = await mongo.db().collection('room').insertOne(args.room);
 
                     return insertedDocuments.ops[0];
                 }

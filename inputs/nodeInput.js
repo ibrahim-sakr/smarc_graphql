@@ -5,7 +5,7 @@ module.exports = new graphql.GraphQLInputObjectType({
     description: 'input represents a single node',
     fields: {
         name: { type: graphql.GraphQLString },
-        ip: { type: graphql.GraphQLInt },
+        ip: { type: graphql.GraphQLString },
         port: { type: graphql.GraphQLInt }
     }
 });
