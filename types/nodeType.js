@@ -1,10 +1,11 @@
 const graphql = require('graphql');
+const MongoId = require('scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'Node',
     description: 'node type',
     fields: {
-        _id: { type: graphql.GraphQLID },
+        _id: { type: MongoId },
         name: { type: graphql.GraphQLString },
         ip: { type: graphql.GraphQLString },
         port: { type: graphql.GraphQLString }

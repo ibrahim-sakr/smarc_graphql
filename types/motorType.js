@@ -1,16 +1,17 @@
 const graphql = require('graphql');
 const RoomType = require('types/roomType');
 const NodeType = require('types/nodeType');
+const MongoId = require('scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'Motor',
     description: 'motor type',
     fields: {
-        _id: { type: graphql.GraphQLID },
+        _id: { type: MongoId },
         id: { type: graphql.GraphQLString },
         name: { type: graphql.GraphQLString },
-        room_id: { type: graphql.GraphQLString },
-        node_id: { type: graphql.GraphQLString },
+        room_id: { type: MongoId },
+        node_id: { type: MongoId },
         room: {
             type: RoomType,
             async resolve(parentValue, args, context) {
