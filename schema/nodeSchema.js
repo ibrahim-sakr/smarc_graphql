@@ -9,7 +9,7 @@ class NodeSchema {
         return {
             type: NodeType,
             args: {
-                _id: { type: MongoId }
+                _id: { type: graphql.GraphQLNonNull( MongoId ) }
             },
             async resolve(parentValue, args) {
                 return await mongo.db().collection('node').findOne({ _id: mongo.id.new(args._id) });

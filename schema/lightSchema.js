@@ -1,6 +1,6 @@
 const graphql = require('graphql');
 const LightType = require('types/lightType');
-const PointInput = require('inputs/pointInput');
+const LightInput = require('inputs/lightInput');
 const mongo = require('db/mongo');
 const MongoId = require('scalars/mongoIdScalar');
 
@@ -9,7 +9,7 @@ class LightSchema {
         return {
             type: LightType,
             args: {
-                _id: { type: MongoId }
+                _id: { type: graphql.GraphQLNonNull( MongoId ) }
             },
             async resolve(parentValue, args) {
                 return await mongo.db().collection('light').findOne({ _id: mongo.id.new(args._id) });
@@ -31,7 +31,7 @@ class LightSchema {
             type: LightType,
             args: {
                 _id: { type: MongoId },
-                point: { type: PointInput },
+                point: { type: LightInput },
                 delete: { type: graphql.GraphQLBoolean }
             },
             async resolve(parentValue, args) {

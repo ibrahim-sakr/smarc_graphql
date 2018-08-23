@@ -24,7 +24,7 @@ const parseLiteralMongoId = (ast) => {
 
 module.exports = new graphql.GraphQLScalarType({
     name: 'MongoId',
-    description: '24 char represent a valid mongodb ObjectID',
+    description: 'a 24 characters string represent a valid mongodb ObjectID',
     serialize: serializeMongoId,
     parseValue: parseMongoId,
     parseLiteral: parseLiteralMongoId,

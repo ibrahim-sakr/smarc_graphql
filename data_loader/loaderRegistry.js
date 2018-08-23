@@ -9,12 +9,12 @@ module.exports = {
         const mongoIds = ids.map((id) => {
             return ObjectID(id);
         });
-        return await mongo.db().collection('room').find({ _id: { $in: mongoIds } }).toArray();
+        return mongo.db().collection('room').find({ _id: { $in: mongoIds } }).toArray();
     }),
     nodes: Loader(async (ids) => {
         const mongoIds = ids.map((id) => {
             return ObjectID(id);
         });
-        return await mongo.db().collection('node').find({ _id: { $in: mongoIds } }).toArray();
+        return mongo.db().collection('node').find({ _id: { $in: mongoIds } }).toArray();
     })
 };

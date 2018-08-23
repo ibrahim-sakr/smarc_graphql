@@ -9,7 +9,7 @@ class LogSchema {
         return {
             type: LogType,
             args: {
-                _id: { type: MongoId }
+                _id: { type: graphql.GraphQLNonNull( MongoId ) }
             },
             async resolve(parentValue, args) {
                 return await mongo.db().collection('log').findOne({ _id: mongo.id.new(args._id) });
