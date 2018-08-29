@@ -6,30 +6,18 @@ const LogSchema = require('schema/logSchema');
 const RoomSchema = require('schema/roomSchema');
 const NodeSchema = require('schema/nodeSchema');
 const UserSchema = require('schema/userSchema');
+const AuthSchema = require('schema/authSchema');
 
 const queryType = new graphql.GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
         light: LightSchema.find(),
-        lights: LightSchema.all(),
-
         device: DeviceSchema.find(),
-        devices: DeviceSchema.all(),
-
         motor: MotorSchema.find(),
-        motors: MotorSchema.all(),
-
         log: LogSchema.find(),
-        logs: LogSchema.all(),
-
         room: RoomSchema.find(),
-        rooms: RoomSchema.all(),
-
         node: NodeSchema.find(),
-        nodes: NodeSchema.all(),
-
-        user: UserSchema.find(),
-        users: UserSchema.all(),
+        user: UserSchema.query(),
     }
 });
 
@@ -43,6 +31,7 @@ const mutationType = new graphql.GraphQLObjectType({
         room: RoomSchema.mutation(),
         node: NodeSchema.mutation(),
         user: UserSchema.mutation(),
+        token: AuthSchema.mutation(),
     }
 });
 

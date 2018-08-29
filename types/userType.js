@@ -1,5 +1,6 @@
 const graphql = require('graphql');
 const MongoId = require('scalars/mongoIdScalar');
+const rolesEnum = require('enums/rolesEnum');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'User',
@@ -8,6 +9,6 @@ module.exports = new graphql.GraphQLObjectType({
         _id: { type: MongoId },
         username: { type: graphql.GraphQLString },
         password: { type: graphql.GraphQLString },
-        roles: { type: graphql.GraphQLList(graphql.GraphQLString) }
+        roles: { type: graphql.GraphQLList(rolesEnum) }
     }
 });

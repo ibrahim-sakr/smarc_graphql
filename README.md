@@ -18,6 +18,7 @@ here I'm trying to implement all endpoints for the smarc with graphQL.
     - N+1 problem
     - duplicated code
     - update and delete operations
+    - authentication and authorization
 
 ## Install
 

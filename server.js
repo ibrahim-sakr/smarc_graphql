@@ -1,25 +1,24 @@
 const express = require('express');
 const express_graphql = require('express-graphql');
-const rootSchema = require('./schema/rootSchema');
-const DataLoader = require('./data_loader/loaderRegistry');
+const rootSchema = require('schema/rootSchema');
 const mongodb = require('db/mongo');
+const Context = require('middlewares/context');
+
+// config
 const serverPort = 4000;
 
 // Create an express server and a GraphQL endpoint
 const app = express();
 
 (async () => {
-
     await mongodb.connect();
-
-    app.use('/graphql', express_graphql({
+    app.use('/graphql', Context.update, express_graphql({
         schema: rootSchema,
-        context: DataLoader,
-        graphiql: true
+        graphiql: true,
+        pretty: true
     }));
-
 })();
 
-app.listen(serverPort, () => console.log(`GraphQL Server Running On http://127.0.0.1:${serverPort}/graphql`));
+app.listen(serverPort, () => console.log(`🚀 🚀 Server => http://127.0.0.1:${serverPort}/graphql 🚀 🚀`));
 
 // Mutation: insert and edit resource
