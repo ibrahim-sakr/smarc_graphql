@@ -11,12 +11,12 @@ const AuthSchema = require('schema/authSchema');
 const queryType = new graphql.GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-        light: LightSchema.find(),
-        device: DeviceSchema.find(),
-        motor: MotorSchema.find(),
-        log: LogSchema.find(),
-        room: RoomSchema.find(),
-        node: NodeSchema.find(),
+        light: LightSchema.query(),
+        device: DeviceSchema.query(),
+        motor: MotorSchema.query(),
+        log: LogSchema.query(),
+        room: RoomSchema.query(),
+        node: NodeSchema.query(),
         user: UserSchema.query(),
     }
 });

@@ -1,67 +1,25 @@
-const graphql = require('graphql');
-const LightType = require('types/lightType');
-const LightInput = require('inputs/lightInput');
-const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const LightQueryType = require('types/lightQueryType');
+const LightMutationType = require('types/lightMutationType');
 
 class LightSchema {
-    static find() {
+    static query() {
         return {
-            type: LightType,
-            args: {
-                _id: { type: graphql.GraphQLNonNull( MongoId ) }
-            },
-            async resolve(parentValue, args) {
-                return await mongo.db().collection('light').findOne({ _id: mongo.id.new(args._id) });
+            type: LightQueryType,
+            resolve() {
+                // just place holder 'cause if it not exist the GraphQl will not read the sub-functions into UserObjectType
+                return '';
             }
-        };
-    }
-
-    static all() {
-        return {
-            type: graphql.GraphQLList(LightType),
-            async resolve() {
-                return await mongo.db().collection('light').find({}).toArray();
-            }
-        };
+        }
     }
 
     static mutation() {
         return {
-            type: LightType,
-            args: {
-                _id: { type: MongoId },
-                point: { type: LightInput },
-                delete: { type: graphql.GraphQLBoolean }
-            },
-            async resolve(parentValue, args) {
-                // delete exist document
-                if (args._id && args.delete) {
-                    const deletedDocuments = await mongo.db().collection('light').findOneAndDelete({ _id: mongo.id.new(args._id) });
-
-                    return deletedDocuments.value;
-                }
-
-                // update exists document
-                if (args._id && args.point && !args.delete) {
-                    const updatedDocuments = await mongo.db().collection('light').findOneAndUpdate({ _id: mongo.id.new(args._id) }, {
-                        $set: args.point
-                    });
-
-                    return updatedDocuments.value;
-                }
-
-                // create new document
-                if (!args._id && args.point && !args.delete) {
-                    const insertedDocuments = await mongo.db().collection('light').insertOne(args.point);
-
-                    return insertedDocuments.ops[0];
-                }
-
-                // return error
-                return new Error('you must provide a correct params');
+            type: LightMutationType,
+            resolve() {
+                // just place holder 'cause if it not exist the GraphQl will not read the sub-functions into UserObjectType
+                return '';
             }
-        };
+        }
     }
 }
 
