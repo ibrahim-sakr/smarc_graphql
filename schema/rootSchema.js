@@ -1,24 +1,60 @@
 const graphql = require('graphql');
-const LightSchema = require('schema/lightSchema');
-const DeviceSchema = require('schema/deviceSchema');
-const MotorSchema = require('schema/motorSchema');
-const LogSchema = require('schema/logSchema');
-const RoomSchema = require('schema/roomSchema');
-const NodeSchema = require('schema/nodeSchema');
-const UserSchema = require('schema/userSchema');
-const AuthSchema = require('schema/authSchema');
+const LightType = require('schema/types/lightType');
+const DeviceType = require('schema/types/deviceType');
+const MotorType = require('schema/types/motorType');
+const LogType = require('schema/types/logType');
+const RoomType = require('schema/types/roomType');
+const NodeType = require('schema/types/nodeType');
+const UserType = require('schema/types/userType');
+const AuthType = require('schema/types/authType');
+const TokenResolvers = require('resolvers/tokenResolver');
 
 const queryType = new graphql.GraphQLObjectType({
     name: 'RootQueryType',
     description: 'the main query type',
     fields: {
-        lights: LightSchema.query,
-        devices: DeviceSchema.query,
-        motors: MotorSchema.query,
-        logs: LogSchema.query,
-        rooms: RoomSchema.query,
-        nodes: NodeSchema.query,
-        users: UserSchema.query,
+        lights: {
+            type: LightType.query,
+            resolve() {
+                return '';
+            }
+        },
+        devices: {
+            type: DeviceType.query,
+            resolve() {
+                return '';
+            }
+        },
+        motors: {
+            type: MotorType.query,
+            resolve() {
+                return '';
+            }
+        },
+        logs: {
+            type: LogType.query,
+            resolve() {
+                return '';
+            }
+        },
+        rooms: {
+            type: RoomType.query,
+            resolve() {
+                return '';
+            }
+        },
+        nodes: {
+            type: NodeType.query,
+            resolve() {
+                return '';
+            }
+        },
+        users: {
+            type: UserType.query,
+            resolve() {
+                return '';
+            }
+        },
     }
 });
 
@@ -26,14 +62,58 @@ const mutationType = new graphql.GraphQLObjectType({
     name: 'RootMutationType',
     description: 'the main mutation type',
     fields: {
-        lights: LightSchema.mutation,
-        devices: DeviceSchema.mutation,
-        motors: MotorSchema.mutation,
-        logs: LogSchema.mutation,
-        rooms: RoomSchema.mutation,
-        nodes: NodeSchema.mutation,
-        users: UserSchema.mutation,
-        token: AuthSchema.mutation,
+        lights: {
+            type: LightType.mutation,
+            resolve() {
+                return '';
+            }
+        },
+        devices: {
+            type: DeviceType.mutation,
+            resolve() {
+                return '';
+            }
+        },
+        motors: {
+            type: MotorType.mutation,
+            resolve() {
+                return '';
+            }
+        },
+        logs: {
+            type: LogType.mutation,
+            resolve() {
+                return '';
+            }
+        },
+        rooms: {
+            type: RoomType.mutation,
+            resolve() {
+                return '';
+            }
+        },
+        nodes: {
+            type: NodeType.mutation,
+            resolve() {
+                return '';
+            }
+        },
+        users: {
+            type: UserType.mutation,
+            resolve() {
+                return '';
+            }
+        },
+        token: {
+            type: AuthType.type,
+            args: {
+                username: { type: graphql.GraphQLString },
+                password: { type: graphql.GraphQLString }
+            },
+            async resolve(parentValue, args) {
+                return TokenResolvers.generate(args);
+            }
+        },
     }
 });
 
