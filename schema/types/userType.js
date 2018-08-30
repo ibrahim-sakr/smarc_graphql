@@ -1,6 +1,6 @@
 const graphql = require('graphql');
-const MongoId = require('scalars/mongoIdScalar');
-const rolesEnum = require('enums/rolesEnum');
+const MongoId = require('schema/scalars/mongoIdScalar');
+const rolesEnum = require('schema/enums/rolesEnum');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'User',

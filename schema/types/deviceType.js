@@ -1,6 +1,6 @@
 const graphql = require('graphql');
-const DetailsType = require('types/detailsType');
-const MongoId = require('scalars/mongoIdScalar');
+const DetailsType = require('schema/types/detailsType');
+const MongoId = require('schema/scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'Device',

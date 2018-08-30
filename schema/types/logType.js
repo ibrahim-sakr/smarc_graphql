@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'Log',

@@ -1,8 +1,8 @@
 const graphql = require('graphql');
-const LightType = require('types/lightType');
-const LightInput = require('inputs/lightInput');
+const LightType = require('schema/types/lightType');
+const LightInput = require('schema/inputs/lightInput');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'LightMutation',

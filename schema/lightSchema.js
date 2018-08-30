@@ -1,5 +1,5 @@
-const LightQueryType = require('types/lightQueryType');
-const LightMutationType = require('types/lightMutationType');
+const LightQueryType = require('schema/types/lightQueryType');
+const LightMutationType = require('schema/types/lightMutationType');
 
 class LightSchema {
     static query() {

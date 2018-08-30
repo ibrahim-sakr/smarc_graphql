@@ -1,8 +1,8 @@
 const graphql = require('graphql');
-const RoomType = require('types/roomType');
-const RoomInput = require('inputs/roomInput');
+const RoomType = require('schema/types/roomType');
+const RoomInput = require('schema/inputs/roomInput');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'RoomMutation',

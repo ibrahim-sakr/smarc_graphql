@@ -1,7 +1,7 @@
 const graphql = require('graphql');
-const MotorType = require('types/motorType');
+const MotorType = require('schema/types/motorType');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 const Viewer = require('utils/viewer');
 
 module.exports = new graphql.GraphQLObjectType({

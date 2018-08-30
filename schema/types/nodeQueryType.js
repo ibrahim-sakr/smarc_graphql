@@ -1,29 +1,29 @@
 const graphql = require('graphql');
-const RoomType = require('types/roomType');
+const NodeType = require('schema/types/nodeType');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 const Viewer = require('utils/viewer');
 
 module.exports = new graphql.GraphQLObjectType({
-    name: 'RoomQuery',
-    description: 'room query type',
+    name: 'NodeQuery',
+    description: 'node query type',
     fields: {
         find: {
-            type: RoomType,
+            type: NodeType,
             args: {
                 _id: { type: graphql.GraphQLNonNull(MongoId) }
             },
             async resolve(parentValue, args) {
-                return await mongo.db().collection('rooms').findOne({ _id: mongo.id.new(args._id) });
+                return await mongo.db().collection('nodes').findOne({ _id: mongo.id.new(args._id) });
             }
         },
 
         all: {
-            type: graphql.GraphQLList(RoomType),
+            type: graphql.GraphQLList(NodeType),
             async resolve(parentValue, args, context) {
                 Viewer.checkRole('admin', context.viewer.roles);
 
-                return await mongo.db().collection('rooms').find().toArray();
+                return await mongo.db().collection('nodes').find().toArray();
             }
         },
     }

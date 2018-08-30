@@ -20,5 +20,3 @@ const app = express();
 })();
 
 app.listen(serverPort, () => console.log(`🚀 🚀 Server => http://127.0.0.1:${serverPort}/graphql 🚀 🚀`));
-
-// Mutation: insert and edit resource

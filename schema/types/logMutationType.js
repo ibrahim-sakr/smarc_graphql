@@ -1,8 +1,8 @@
 const graphql = require('graphql');
-const LogType = require('types/logType');
-const LogInput = require('inputs/logInput');
+const LogType = require('schema/types/logType');
+const LogInput = require('schema/inputs/logInput');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'LogMutation',

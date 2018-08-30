@@ -1,8 +1,8 @@
 const graphql = require('graphql');
-const UserType = require('types/userType');
-const UserInput = require('inputs/userInput');
+const UserType = require('schema/types/userType');
+const UserInput = require('schema/inputs/userInput');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'UserMutation',

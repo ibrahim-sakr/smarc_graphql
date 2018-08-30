@@ -1,5 +1,5 @@
-const MotorQueryType = require('types/motorQueryType');
-const MotorMutationType = require('types/motorMutationType');
+const MotorQueryType = require('schema/types/motorQueryType');
+const MotorMutationType = require('schema/types/motorMutationType');
 
 class MotorSchema {
     static query() {

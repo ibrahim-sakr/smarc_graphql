@@ -1,5 +1,5 @@
-const NodeQueryType = require('types/nodeQueryType');
-const NodeMutationType = require('types/nodeMutationType');
+const NodeQueryType = require('schema/types/nodeQueryType');
+const NodeMutationType = require('schema/types/nodeMutationType');
 
 class NodeSchema {
     static query() {

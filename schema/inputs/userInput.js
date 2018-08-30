@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const rolesEnum = require('enums/rolesEnum');
+const rolesEnum = require('schema/enums/rolesEnum');
 
 module.exports = new graphql.GraphQLInputObjectType({
     name: 'UserInput',

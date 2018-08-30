@@ -1,29 +1,29 @@
 const graphql = require('graphql');
-const DeviceType = require('types/deviceType');
+const LightType = require('schema/types/lightType');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 const Viewer = require('utils/viewer');
 
 module.exports = new graphql.GraphQLObjectType({
-    name: 'DeviceQuery',
-    description: 'device query type',
+    name: 'LightQuery',
+    description: 'light query type',
     fields: {
         find: {
-            type: DeviceType,
+            type: LightType,
             args: {
                 _id: { type: graphql.GraphQLNonNull(MongoId) }
             },
             async resolve(parentValue, args) {
-                return await mongo.db().collection('devices').findOne({ _id: mongo.id.new(args._id) });
+                return await mongo.db().collection('lights').findOne({ _id: mongo.id.new(args._id) });
             }
         },
 
         all: {
-            type: graphql.GraphQLList(DeviceType),
+            type: graphql.GraphQLList(LightType),
             async resolve(parentValue, args, context) {
                 Viewer.checkRole('admin', context.viewer.roles);
 
-                return await mongo.db().collection('devices').find().toArray();
+                return await mongo.db().collection('lights').find().toArray();
             }
         },
     }

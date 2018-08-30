@@ -1,5 +1,5 @@
-const LogQueryType = require('types/logQueryType');
-const LogMutationType = require('types/logMutationType');
+const LogQueryType = require('schema/types/logQueryType');
+const LogMutationType = require('schema/types/logMutationType');
 
 class LogSchema {
     static query() {

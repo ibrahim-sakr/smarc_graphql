@@ -1,5 +1,5 @@
-const UserQueryType = require('types/userQueryType');
-const UserMutationType = require('types/userMutationType');
+const UserQueryType = require('schema/types/userQueryType');
+const UserMutationType = require('schema/types/userMutationType');
 
 class UserSchema {
     static query() {

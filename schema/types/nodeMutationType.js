@@ -1,8 +1,8 @@
 const graphql = require('graphql');
-const NodeType = require('types/nodeType');
-const NodeInput = require('inputs/nodeInput');
+const NodeType = require('schema/types/nodeType');
+const NodeInput = require('schema/inputs/nodeInput');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'NodeMutation',

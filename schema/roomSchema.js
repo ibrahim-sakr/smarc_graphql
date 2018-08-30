@@ -1,5 +1,5 @@
-const RoomQueryType = require('types/roomQueryType');
-const RoomMutationType = require('types/roomMutationType');
+const RoomQueryType = require('schema/types/roomQueryType');
+const RoomMutationType = require('schema/types/roomMutationType');
 
 class RoomSchema {
     static query() {

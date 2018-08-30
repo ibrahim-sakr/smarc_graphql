@@ -1,8 +1,8 @@
 const graphql = require('graphql');
-const DeviceType = require('types/deviceType');
-const DeviceInput = require('inputs/deviceInput');
+const DeviceType = require('schema/types/deviceType');
+const DeviceInput = require('schema/inputs/deviceInput');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'DeviceMutation',

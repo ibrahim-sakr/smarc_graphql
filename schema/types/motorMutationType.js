@@ -1,8 +1,8 @@
 const graphql = require('graphql');
-const MotorType = require('types/motorType');
-const MotorInput = require('inputs/motorInput');
+const MotorType = require('schema/types/motorType');
+const MotorInput = require('schema/inputs/motorInput');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'MotorMutation',

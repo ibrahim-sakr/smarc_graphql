@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const AuthType = require('types/authType');
+const AuthType = require('schema/types/authType');
 const Viewer = require('utils/viewer');
 
 class AuthSchema {

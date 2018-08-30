@@ -1,5 +1,5 @@
-const DeviceQueryType = require('types/deviceQueryType');
-const DeviceMutationType = require('types/deviceMutationType');
+const DeviceQueryType = require('schema/types/deviceQueryType');
+const DeviceMutationType = require('schema/types/deviceMutationType');
 
 class DeviceSchema {
     static query() {

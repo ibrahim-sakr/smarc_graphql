@@ -1,7 +1,7 @@
 const graphql = require('graphql');
-const LogType = require('types/logType');
+const LogType = require('schema/types/logType');
 const mongo = require('db/mongo');
-const MongoId = require('scalars/mongoIdScalar');
+const MongoId = require('schema/scalars/mongoIdScalar');
 const Viewer = require('utils/viewer');
 
 module.exports = new graphql.GraphQLObjectType({

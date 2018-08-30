@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const UserType = require('types/userType');
+const UserType = require('schema/types/userType');
 
 module.exports = new graphql.GraphQLObjectType({
     name: 'Auth',
