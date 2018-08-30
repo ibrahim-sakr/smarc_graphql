@@ -10,28 +10,30 @@ const AuthSchema = require('schema/authSchema');
 
 const queryType = new graphql.GraphQLObjectType({
     name: 'RootQueryType',
+    description: 'the main query type',
     fields: {
-        light: LightSchema.query(),
-        device: DeviceSchema.query(),
-        motor: MotorSchema.query(),
-        log: LogSchema.query(),
-        room: RoomSchema.query(),
-        node: NodeSchema.query(),
-        user: UserSchema.query(),
+        lights: LightSchema.query,
+        devices: DeviceSchema.query,
+        motors: MotorSchema.query,
+        logs: LogSchema.query,
+        rooms: RoomSchema.query,
+        nodes: NodeSchema.query,
+        users: UserSchema.query,
     }
 });
 
 const mutationType = new graphql.GraphQLObjectType({
     name: 'RootMutationType',
+    description: 'the main mutation type',
     fields: {
-        light: LightSchema.mutation(),
-        device: DeviceSchema.mutation(),
-        motor: MotorSchema.mutation(),
-        log: LogSchema.mutation(),
-        room: RoomSchema.mutation(),
-        node: NodeSchema.mutation(),
-        user: UserSchema.mutation(),
-        token: AuthSchema.mutation(),
+        lights: LightSchema.mutation,
+        devices: DeviceSchema.mutation,
+        motors: MotorSchema.mutation,
+        logs: LogSchema.mutation,
+        rooms: RoomSchema.mutation,
+        nodes: NodeSchema.mutation,
+        users: UserSchema.mutation,
+        token: AuthSchema.mutation,
     }
 });
 
