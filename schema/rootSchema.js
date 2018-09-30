@@ -7,7 +7,7 @@ const RoomType = require('schema/types/roomType');
 const NodeType = require('schema/types/nodeType');
 const UserType = require('schema/types/userType');
 const AuthType = require('schema/types/authType');
-const TokenResolvers = require('resolvers/tokenResolver');
+const TokenResolvers = require('handlers/tokenHandler');
 
 const queryType = new graphql.GraphQLObjectType({
     name: 'RootQueryType',

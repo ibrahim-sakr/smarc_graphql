@@ -1,6 +1,6 @@
 const graphql = require('graphql');
 const MongoId = require('schema/scalars/mongoIdScalar');
-const resolvers = require('resolvers/logResolver');
+const handlers = require('handlers/logHandler');
 const LogInput = require('schema/inputs/logInput');
 
 const type = new graphql.GraphQLObjectType({
@@ -23,14 +23,14 @@ const query = new graphql.GraphQLObjectType({
                 _id: { type: graphql.GraphQLNonNull(MongoId) }
             },
             async resolve(parentValue, args, context) {
-                return resolvers.find(parentValue, args, context);
+                return handlers.find(parentValue, args, context);
             }
         },
 
         all: {
             type: graphql.GraphQLList(type),
             async resolve(parentValue, args, context) {
-                return resolvers.all(parentValue, args, context);
+                return handlers.all(parentValue, args, context);
             }
         },
     }
@@ -46,7 +46,7 @@ const mutation = new graphql.GraphQLObjectType({
                 log: { type: LogInput },
             },
             async resolve(parentValue, args, context) {
-                return resolvers.create(parentValue, args, context);
+                return handlers.create(parentValue, args, context);
             }
         },
 
@@ -57,7 +57,7 @@ const mutation = new graphql.GraphQLObjectType({
                 log: { type: LogInput },
             },
             async resolve(parentValue, args, context) {
-                return resolvers.update(parentValue, args, context);
+                return handlers.update(parentValue, args, context);
             }
         },
 
@@ -67,7 +67,7 @@ const mutation = new graphql.GraphQLObjectType({
                 _id: { type: MongoId },
             },
             async resolve(parentValue, args, context) {
-                return resolvers.deletion(parentValue, args, context);
+                return handlers.deletion(parentValue, args, context);
             }
         }
     }

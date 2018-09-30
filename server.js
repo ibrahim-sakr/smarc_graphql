@@ -11,6 +11,7 @@ const serverPort = 4000;
 const app = express();
 
 (async () => {
+    // connect to mongoDB and await for connection
     await mongodb.connect();
     app.use('/graphql', Context.update, express_graphql({
         schema: rootSchema,

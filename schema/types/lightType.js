@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const resolvers = require('resolvers/lightResolver');
+const handlers = require('handlers/lightHandler');
 const RoomType = require('schema/types/roomType');
 const NodeType = require('schema/types/nodeType');
 const LightInput = require('schema/inputs/lightInput');
@@ -18,13 +18,13 @@ const type = new graphql.GraphQLObjectType({
         room: {
             type: RoomType.type,
             async resolve(parentValue, args, context) {
-                return resolvers.rooms(parentValue, args, context);
+                return handlers.rooms(parentValue, args, context);
             }
         },
         node: {
             type: NodeType.type,
             async resolve(parentValue, args, context) {
-                return resolvers.nodes(parentValue, args, context);
+                return handlers.nodes(parentValue, args, context);
             }
         },
     }
@@ -40,14 +40,14 @@ const query = new graphql.GraphQLObjectType({
                 _id: { type: graphql.GraphQLNonNull(MongoId) }
             },
             async resolve(parentValue, args, context) {
-                return resolvers.create(parentValue, args, context);
+                return handlers.create(parentValue, args, context);
             }
         },
 
         all: {
             type: graphql.GraphQLList(type),
             async resolve(parentValue, args, context) {
-                return resolvers.all(parentValue, args, context);
+                return handlers.all(parentValue, args, context);
             }
         },
     }
@@ -63,7 +63,7 @@ const mutation = new graphql.GraphQLObjectType({
                 light: { type: LightInput },
             },
             async resolve(parentValue, args, context) {
-                return resolvers.create(parentValue, args, context);
+                return handlers.create(parentValue, args, context);
             }
         },
 
@@ -74,7 +74,7 @@ const mutation = new graphql.GraphQLObjectType({
                 light: { type: LightInput },
             },
             async resolve(parentValue, args, context) {
-                return resolvers.update(parentValue, args, context);
+                return handlers.update(parentValue, args, context);
             }
         },
 
@@ -84,7 +84,7 @@ const mutation = new graphql.GraphQLObjectType({
                 _id: { type: MongoId },
             },
             async resolve(parentValue, args, context) {
-                return resolvers.deletion(parentValue, args, context);
+                return handlers.deletion(parentValue, args, context);
             }
         }
     }

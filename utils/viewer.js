@@ -11,7 +11,7 @@ const fromAuthToken = (token = '') => {
 
 const generateToken = async (username, password) => {
     // select the user from DB
-    const viewer = await mongo.db().collection('user').findOne({
+    const viewer = await mongo.db().collection('users').findOne({
         username,
         password
     });
